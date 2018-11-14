@@ -1,0 +1,6 @@
+bme\swarch\travellagency\carservice\model\Car.class
+bme\swarch\travellagency\carservice\CarRentalApplication.class
+bme\swarch\travellagency\carservice\controller\CarController.class
+bme\swarch\travellagency\carservice\repository\CarRepository.class
+bme\swarch\travellagency\carservice\service\CarService.class
+bme\swarch\travellagency\carservice\ResourceNotFoundException.class
