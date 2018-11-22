@@ -1,6 +1,5 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
-**/target/
 
 ### STS ###
 .apt_generated
@@ -24,3 +23,7 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+/hotel-service/target/
+/hotel-api/target/
+/car-service/target/
+/car-api/target/

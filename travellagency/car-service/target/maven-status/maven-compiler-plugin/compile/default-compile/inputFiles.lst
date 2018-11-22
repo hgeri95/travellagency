@@ -1,6 +1,11 @@
 D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\repository\CarRepository.java
+D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\model\Reservation.java
 D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\CarRentalApplication.java
+D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\service\ReservationService.java
+D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\configuration\SwaggerConfig.java
+D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\configuration\CarRentalConfiguration.java
 D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\ResourceNotFoundException.java
+D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\repository\ReservationRepository.java
 D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\controller\CarController.java
 D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\model\Car.java
 D:\Tananyag\MSC\2_felev\Szoft.Arch\Repo\travellagency\travellagency\car-service\src\main\java\bme\swarch\travellagency\carservice\service\CarService.java
