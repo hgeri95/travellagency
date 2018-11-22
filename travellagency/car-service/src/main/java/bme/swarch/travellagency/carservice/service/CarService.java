@@ -1,14 +1,17 @@
 package bme.swarch.travellagency.carservice.service;
 
 import bme.swarch.travellagency.carservice.ResourceNotFoundException;
+import bme.swarch.travellagency.carservice.api.CarDTO;
 import bme.swarch.travellagency.carservice.model.Car;
 import bme.swarch.travellagency.carservice.repository.CarRepository;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarService {
@@ -17,31 +20,27 @@ public class CarService {
     @Autowired
     CarRepository repository;
 
-    public List<Car> getAllCars() {
-        return repository.findAll();
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public List<CarDTO> getAllCars() {
+        List<Car> cars = repository.findAll();
+        return cars.stream()
+                .map(c -> convertToDto(c))
+                .collect(Collectors.toList());
     }
 
-    public Car createCar(Car car) {
-        logger.debug("Create new car: {}", car);
-        return repository.save(car);
+    public CarDTO createCar(CarDTO carDto) {
+        logger.debug("Create new car: {}", carDto);
+        Car car = convertToEntity(carDto);
+        Car createdCar = repository.save(car);
+        return convertToDto(createdCar);
     }
 
-    public Car getCarById(Long id) {
-        return repository.findById(id)
+    public CarDTO getCarById(Long id) {
+        Car car = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Car not found with id: " + id));
-    }
-
-    public Car updateCar(Long id, Car car) {
-        Car storedCar = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Car not found with id: " + id));
-
-        storedCar.setType(car.getType());
-        storedCar.setBootSize(car.getBootSize());
-        storedCar.setFree(car.isFree());
-        storedCar.setSeats(car.getSeats());
-
-        Car updatedCar = repository.save(storedCar);
-        return updatedCar;
+        return convertToDto(car);
     }
 
     public void deleteCar(Long id) {
@@ -49,5 +48,15 @@ public class CarService {
                 .orElseThrow(() -> new ResourceNotFoundException("Car not found with id: " + id));
 
         repository.delete(storedCar);
+    }
+
+    private CarDTO convertToDto(Car car) {
+        CarDTO carDTO = modelMapper.map(car, CarDTO.class);
+        return carDTO;
+    }
+
+    private Car convertToEntity(CarDTO carDTO) {
+        Car car = modelMapper.map(carDTO, Car.class);
+        return car;
     }
 }

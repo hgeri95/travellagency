@@ -1,15 +1,10 @@
-package bme.swarch.travellagency.carservice.model;
+package bme.swarch.travellagency.carservice.api;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "cars")
-public class Car implements Serializable {
+public class CarDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
