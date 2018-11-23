@@ -1,4 +1,4 @@
-package bme.swarch.travellagency.carservice;
+package bme.swarch.travellagency.carservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -3,6 +3,7 @@ package bme.swarch.travellagency.carservice.controller;
 import bme.swarch.travellagency.carservice.api.CarDTO;
 import bme.swarch.travellagency.carservice.api.CarSearchRequest;
 import bme.swarch.travellagency.carservice.api.ReservationDTO;
+import bme.swarch.travellagency.carservice.exception.BadRequestException;
 import bme.swarch.travellagency.carservice.service.CarService;
 import bme.swarch.travellagency.carservice.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -45,26 +45,34 @@ public class CarController {
     }
 
     @GetMapping("/car/{country}/{city}")
-    public List<CarDTO> getCarFromPlace(@PathVariable("country") String country, @PathVariable("city") String city) {
-        //TODO
-        return Collections.emptyList();
+    public List<CarDTO> getAllCarFromPlace(@PathVariable("country") String country, @PathVariable("city") String city) {
+        if (country != null && city != null) {
+            return carService.getAllCarFromPlace(country, city);
+        } else {
+            throw new BadRequestException("Path variables /{country}/{city} cannot be null!");
+        }
     }
 
     @PostMapping("/car/reservation")
     public ReservationDTO createReservation(@Valid @RequestBody ReservationDTO reservationDTO) {
-        //TODO
-        return null;
+        if (reservationDTO.getEnd().before(reservationDTO.getStart())) {
+            throw new BadRequestException("End date before start!");
+        } else {
+            return reservationService.createReservation(reservationDTO);
+        }
     }
 
     @GetMapping("/car/reservation/{id}")
     public List<ReservationDTO> getAllReservationForCar(@PathVariable("id") Long id) {
-        //TODO
-        return Collections.emptyList();
+        if (id != null) {
+            return reservationService.getAllReservationForCar(id);
+        } else {
+            throw new BadRequestException("Path variable carId cannot be null!");
+        }
     }
 
-    @GetMapping("/car/free")
+    @PostMapping("/car/free")
     public List<CarDTO> getFreeCars(@Valid @RequestBody CarSearchRequest request) {
-        //TODO
-        return Collections.emptyList();
+        return carService.getFreeCars(request);
     }
 }

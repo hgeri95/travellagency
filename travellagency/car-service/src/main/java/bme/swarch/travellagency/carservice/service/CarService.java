@@ -1,7 +1,8 @@
 package bme.swarch.travellagency.carservice.service;
 
-import bme.swarch.travellagency.carservice.ResourceNotFoundException;
 import bme.swarch.travellagency.carservice.api.CarDTO;
+import bme.swarch.travellagency.carservice.api.CarSearchRequest;
+import bme.swarch.travellagency.carservice.exception.ResourceNotFoundException;
 import bme.swarch.travellagency.carservice.model.Car;
 import bme.swarch.travellagency.carservice.repository.CarRepository;
 import org.modelmapper.ModelMapper;
@@ -18,7 +19,10 @@ public class CarService {
     private static final Logger logger = LoggerFactory.getLogger(CarService.class);
 
     @Autowired
-    CarRepository repository;
+    private CarRepository repository;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -48,6 +52,19 @@ public class CarService {
                 .orElseThrow(() -> new ResourceNotFoundException("Car not found with id: " + id));
 
         repository.delete(storedCar);
+    }
+
+    public List<CarDTO> getAllCarFromPlace(String country, String city) {
+        List<Car> cars = repository.findAllByCountryAndCity(country,city);
+        return cars.stream().map(c -> convertToDto(c)).collect(Collectors.toList());
+    }
+
+    public List<CarDTO> getFreeCars(CarSearchRequest carSearchRequest) {
+        List<Car> cars = repository.findAllByCountryAndCity(carSearchRequest.getCountry(), carSearchRequest.getCity());
+        List<Car> freeCars = cars.stream()
+                .filter(c -> reservationService.isCarFree(c.getId(), carSearchRequest.getStart(), carSearchRequest.getEnd()))
+                .collect(Collectors.toList());
+        return freeCars.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     private CarDTO convertToDto(Car car) {
