@@ -56,7 +56,7 @@ public class CarService {
 
     public List<CarDTO> getAllCarFromPlace(String country, String city) {
         List<Car> cars = repository.findAllByCountryAndCity(country,city);
-        return cars.stream().map(c -> convertToDto(c)).collect(Collectors.toList());
+        return cars.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     public List<CarDTO> getFreeCars(CarSearchRequest carSearchRequest) {

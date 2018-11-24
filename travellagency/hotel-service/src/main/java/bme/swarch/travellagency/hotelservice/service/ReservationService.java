@@ -1,9 +1,9 @@
-package bme.swarch.travellagency.carservice.service;
+package bme.swarch.travellagency.hotelservice.service;
 
-import bme.swarch.travellagency.carservice.api.ReservationDTO;
-import bme.swarch.travellagency.carservice.exception.BadRequestException;
-import bme.swarch.travellagency.carservice.model.Reservation;
-import bme.swarch.travellagency.carservice.repository.ReservationRepository;
+import bme.swarch.travellagency.hotelservice.api.ReservationDTO;
+import bme.swarch.travellagency.hotelservice.exception.BadRequestException;
+import bme.swarch.travellagency.hotelservice.model.Reservation;
+import bme.swarch.travellagency.hotelservice.repository.ReservationRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,27 +21,28 @@ public class ReservationService {
     @Autowired
     private ModelMapper modelMapper;
 
+    public List<ReservationDTO> getAllReservationForRoom(Long roomId) {
+        List<Reservation> reservations = repository.findAllByRoomId(roomId);
+        return reservations.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    public boolean isRoomFree(Long roomId, Date start, Date end) {
+        List<Reservation> reservations = repository.findAllByRoomId(roomId);
+        return isReservationAcceptable(start, end, reservations);
+    }
+
     public ReservationDTO createReservation(ReservationDTO reservationDTO) {
         Reservation reservation = convertToEntity(reservationDTO);
-        List<Reservation> oldReservations = repository.findAllByCarId(reservationDTO.getCarId());
+        List<Reservation> oldReservations = repository.findAllByRoomId(reservationDTO.getRoomId());
         if (isReservationAcceptable(reservation.getStart(),reservation.getEnd(), oldReservations)) {
             Reservation savedReservation = repository.save(reservation);
-            return concertToDTO(savedReservation);
+            return convertToDTO(savedReservation);
         } else {
             throw new BadRequestException("Invalid request parameters. The resource already reserved!");
         }
     }
 
-    public List<ReservationDTO> getAllReservationForCar(Long carId) {
-        List<Reservation> reservations = repository.findAllByCarId(carId);
-        return reservations.stream().map(this::concertToDTO).collect(Collectors.toList());
-    }
-
-    public boolean isCarFree(Long carId, Date start, Date end) {
-        List<Reservation> reservations = repository.findAllByCarId(carId);
-        return isReservationAcceptable(start, end, reservations);
-    }
-
+    //TODO into util
     private boolean isReservationAcceptable(Date newStart, Date newEnd, List<Reservation> oldReservations) {
         for (Reservation reservation : oldReservations) {
             if (newStart.after(reservation.getStart()) && newStart.before(reservation.getEnd())) {
@@ -57,11 +58,13 @@ public class ReservationService {
         return true;
     }
 
-    private Reservation convertToEntity(ReservationDTO reservationDTO) {
-        return modelMapper.map(reservationDTO, Reservation.class);
+    //TODO into util as generic
+    private ReservationDTO convertToDTO(Reservation reservation) {
+        return modelMapper.map(reservation, ReservationDTO.class);
     }
 
-    private ReservationDTO concertToDTO(Reservation reservation) {
-        return modelMapper.map(reservation, ReservationDTO.class);
+    //TODO into util as generic
+    private Reservation convertToEntity(ReservationDTO reservationDTO) {
+        return modelMapper.map(reservationDTO, Reservation.class);
     }
 }

@@ -11,6 +11,8 @@
 		<module>car-api</module>
 		<module>hotel-api</module>
 		<module>hotel-service</module>
+        <module>plane-api</module>
+		<module>plane-service</module>
 	</modules>
 	<packaging>pom</packaging>
 
@@ -35,6 +37,11 @@
 			<dependency>
 				<groupId>bme.swarch</groupId>
 				<artifactId>car-api</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>bme.swarch</groupId>
+				<artifactId>hotel-api</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
