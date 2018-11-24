@@ -32,13 +32,12 @@ public class HotelController {
         return hotelService.getRoomById(id);
     }
 
-    @GetMapping("/{country}/{city}")
-    public List<RoomDTO> getAllRoomFromPlace(@PathVariable("country") String country,
-                                             @PathVariable("city") String city) {
-        if (country != null && city != null) {
-            return hotelService.getAllRoomFromPlace(country, city);
+    @GetMapping("/place/{city}")
+    public List<RoomDTO> getAllRoomFromPlace(@PathVariable("city") String city) {
+        if (city != null) {
+            return hotelService.getAllRoomFromPlace(city);
         } else {
-            throw new BadRequestException("Path parameters /{country}/{city} cannot be null!");
+            throw new BadRequestException("Path parameters /{city} cannot be null!");
         }
     }
 
@@ -50,6 +49,11 @@ public class HotelController {
     @PostMapping("/free")
     public List<RoomDTO> searchFreeRoom(@Valid @RequestBody RoomSearchRequest request) {
         return hotelService.getFreeRooms(request);
+    }
+
+    @GetMapping("/reservation/one/{id}")
+    public ReservationDTO getReservationById(@PathVariable("id") Long id) {
+        return reservationService.getReservationById(id);
     }
 
     @PostMapping("/reservation")

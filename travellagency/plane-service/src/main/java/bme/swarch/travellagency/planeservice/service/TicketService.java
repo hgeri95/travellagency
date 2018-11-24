@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +31,7 @@ public class TicketService {
         String prs = "Paris";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         createTicket(bud, bcn, dateFormat.parse("2018-12-01 08:10"));
-        createTicket(bud, bcn,dateFormat.parse("2018-12-02 08:10"));
+        createTicket(bud, bcn, dateFormat.parse("2018-12-02 08:10"));
         createTicket(bud, bcn, dateFormat.parse("2018-12-03 08:10"));
         createTicket(bcn, bud, dateFormat.parse("2018-12-02 08:10"));
         createTicket(bcn, bud, dateFormat.parse("2018-12-03 08:10"));
@@ -42,7 +40,7 @@ public class TicketService {
         createTicket(bud, prs, dateFormat.parse("2018-12-03 08:10"));
         createTicket(bud, prs, dateFormat.parse("2018-12-04 08:10"));
         createTicket(bud, prs, dateFormat.parse("2018-12-05 08:10"));
-        createTicket(prs, bud,dateFormat.parse("2018-12-03 08:10"));
+        createTicket(prs, bud, dateFormat.parse("2018-12-03 08:10"));
         createTicket(prs, bud, dateFormat.parse("2018-12-05 08:10"));
         createTicket(prs, bud, dateFormat.parse("2018-12-06 08:10"));
     }
@@ -63,7 +61,7 @@ public class TicketService {
         return tickets.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    public List<TicketDTO> searchFree(String from , String to, Date start) {
+    public List<TicketDTO> searchFree(String from, String to, Date start) {
         List<Ticket> tickets = repository.findAllByFromCityAndToCity(from, to);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         String startDate = dateFormat.format(start);

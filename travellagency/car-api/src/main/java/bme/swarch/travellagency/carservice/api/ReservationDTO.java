@@ -15,6 +15,15 @@ public class ReservationDTO implements Serializable {
     @NotNull
     private Date end;
 
+    public ReservationDTO() {
+    }
+
+    public ReservationDTO(@NotNull Long carId, @NotNull Date start, @NotNull Date end) {
+        this.carId = carId;
+        this.start = start;
+        this.end = end;
+    }
+
     public Long getId() {
         return id;
     }

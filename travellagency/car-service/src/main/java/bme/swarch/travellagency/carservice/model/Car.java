@@ -20,9 +20,6 @@ public class Car implements Serializable {
     private int bootSize;
 
     @NotBlank
-    private String country;
-
-    @NotBlank
     private String city;
 
     public Long getId() {
@@ -55,14 +52,6 @@ public class Car implements Serializable {
 
     public void setBootSize(int bootSize) {
         this.bootSize = bootSize;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getCity() {

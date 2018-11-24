@@ -13,9 +13,6 @@ public class Room implements Serializable {
     private Long id;
 
     @NotBlank
-    private String country;
-
-    @NotBlank
     private String city;
 
     private int size;
@@ -23,8 +20,7 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(@NotBlank String country, @NotBlank String city, int size) {
-        this.country = country;
+    public Room(@NotBlank String city, int size) {
         this.city = city;
         this.size = size;
     }
@@ -35,14 +31,6 @@ public class Room implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
     }
 
     public String getCity() {

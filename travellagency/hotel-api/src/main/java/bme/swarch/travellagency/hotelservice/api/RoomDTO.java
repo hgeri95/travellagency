@@ -7,8 +7,8 @@ public class RoomDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank
-    private String country;
+   // @NotBlank
+    //private String country;
 
     @NotBlank
     private String city;
@@ -18,8 +18,8 @@ public class RoomDTO implements Serializable {
     public RoomDTO() {
     }
 
-    public RoomDTO(@NotBlank String country, @NotBlank String city, int size) {
-        this.country = country;
+    public RoomDTO(/*@NotBlank String country,*/ @NotBlank String city, int size) {
+      //  this.country = country;
         this.city = city;
         this.size = size;
     }
@@ -31,7 +31,7 @@ public class RoomDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+/*
     public String getCountry() {
         return country;
     }
@@ -39,7 +39,7 @@ public class RoomDTO implements Serializable {
     public void setCountry(String country) {
         this.country = country;
     }
-
+*/
     public String getCity() {
         return city;
     }

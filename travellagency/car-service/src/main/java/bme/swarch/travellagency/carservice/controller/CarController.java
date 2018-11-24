@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -44,12 +45,12 @@ public class CarController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/car/{country}/{city}")
-    public List<CarDTO> getAllCarFromPlace(@PathVariable("country") String country, @PathVariable("city") String city) {
-        if (country != null && city != null) {
-            return carService.getAllCarFromPlace(country, city);
+    @GetMapping("/car/place/{city}")
+    public List<CarDTO> getAllCarFromPlace(@PathVariable("city") String city) {
+        if (city != null) {
+            return carService.getAllCarFromPlace(city);
         } else {
-            throw new BadRequestException("Path variables /{country}/{city} cannot be null!");
+            throw new BadRequestException("Path variables /{city} cannot be null!");
         }
     }
 
@@ -60,6 +61,11 @@ public class CarController {
         } else {
             return reservationService.createReservation(reservationDTO);
         }
+    }
+
+    @GetMapping("/car/reservation/one/{id}")
+    public ReservationDTO getReservationById(@PathVariable("id") Long id) {
+        return reservationService.getReservationById(id);
     }
 
     @GetMapping("/car/reservation/{id}")

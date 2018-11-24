@@ -2,6 +2,7 @@ package bme.swarch.travellagency.hotelservice.service;
 
 import bme.swarch.travellagency.hotelservice.api.ReservationDTO;
 import bme.swarch.travellagency.hotelservice.exception.BadRequestException;
+import bme.swarch.travellagency.hotelservice.exception.ResourceNotFoundException;
 import bme.swarch.travellagency.hotelservice.model.Reservation;
 import bme.swarch.travellagency.hotelservice.repository.ReservationRepository;
 import org.modelmapper.ModelMapper;
@@ -19,6 +20,9 @@ public class ReservationService {
     private ReservationRepository repository;
 
     @Autowired
+    private HotelService hotelService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     public List<ReservationDTO> getAllReservationForRoom(Long roomId) {
@@ -32,6 +36,9 @@ public class ReservationService {
     }
 
     public ReservationDTO createReservation(ReservationDTO reservationDTO) {
+        if (hotelService.getRoomById(reservationDTO.getRoomId()) == null) {
+            throw new ResourceNotFoundException("Room not found with id: "+ reservationDTO.getRoomId());
+        }
         Reservation reservation = convertToEntity(reservationDTO);
         List<Reservation> oldReservations = repository.findAllByRoomId(reservationDTO.getRoomId());
         if (isReservationAcceptable(reservation.getStart(),reservation.getEnd(), oldReservations)) {
@@ -40,6 +47,12 @@ public class ReservationService {
         } else {
             throw new BadRequestException("Invalid request parameters. The resource already reserved!");
         }
+    }
+
+    public ReservationDTO getReservationById(Long id) {
+        Reservation reservation = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Reservationnot found with id: " + id));
+        return convertToDTO(reservation);
     }
 
     //TODO into util

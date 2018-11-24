@@ -13,6 +13,8 @@
 		<module>hotel-service</module>
         <module>plane-api</module>
 		<module>plane-service</module>
+		<module>agency-api</module>
+		<module>agency-service</module>
 	</modules>
 	<packaging>pom</packaging>
 
@@ -47,6 +49,11 @@
 			<dependency>
 				<groupId>bme.swarch</groupId>
 				<artifactId>plane-api</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>bme.swarch</groupId>
+				<artifactId>agency-api</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>

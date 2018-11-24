@@ -54,13 +54,13 @@ public class CarService {
         repository.delete(storedCar);
     }
 
-    public List<CarDTO> getAllCarFromPlace(String country, String city) {
-        List<Car> cars = repository.findAllByCountryAndCity(country,city);
+    public List<CarDTO> getAllCarFromPlace(String city) {
+        List<Car> cars = repository.findAllByCity(city);
         return cars.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     public List<CarDTO> getFreeCars(CarSearchRequest carSearchRequest) {
-        List<Car> cars = repository.findAllByCountryAndCity(carSearchRequest.getCountry(), carSearchRequest.getCity());
+        List<Car> cars = repository.findAllByCity(carSearchRequest.getCity());
         List<Car> freeCars = cars.stream()
                 .filter(c -> reservationService.isCarFree(c.getId(), carSearchRequest.getStart(), carSearchRequest.getEnd()))
                 .collect(Collectors.toList());

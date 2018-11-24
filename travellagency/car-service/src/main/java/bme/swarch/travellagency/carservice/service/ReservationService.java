@@ -2,6 +2,7 @@ package bme.swarch.travellagency.carservice.service;
 
 import bme.swarch.travellagency.carservice.api.ReservationDTO;
 import bme.swarch.travellagency.carservice.exception.BadRequestException;
+import bme.swarch.travellagency.carservice.exception.ResourceNotFoundException;
 import bme.swarch.travellagency.carservice.model.Reservation;
 import bme.swarch.travellagency.carservice.repository.ReservationRepository;
 import org.modelmapper.ModelMapper;
@@ -19,9 +20,15 @@ public class ReservationService {
     private ReservationRepository repository;
 
     @Autowired
+    private CarService carService;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     public ReservationDTO createReservation(ReservationDTO reservationDTO) {
+        if (carService.getCarById(reservationDTO.getCarId())==null) {
+            throw new ResourceNotFoundException("Car not found with id: " + reservationDTO.getCarId());
+        }
         Reservation reservation = convertToEntity(reservationDTO);
         List<Reservation> oldReservations = repository.findAllByCarId(reservationDTO.getCarId());
         if (isReservationAcceptable(reservation.getStart(),reservation.getEnd(), oldReservations)) {
@@ -30,6 +37,12 @@ public class ReservationService {
         } else {
             throw new BadRequestException("Invalid request parameters. The resource already reserved!");
         }
+    }
+
+    public ReservationDTO getReservationById(Long id) {
+        Reservation reservation = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Reservation not found with id: " + id));
+        return concertToDTO(reservation);
     }
 
     public List<ReservationDTO> getAllReservationForCar(Long carId) {

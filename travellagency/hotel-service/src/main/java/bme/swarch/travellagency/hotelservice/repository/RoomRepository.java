@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    public List<Room> findAllByCountryAndCity(String country, String city);
+    public List<Room> findAllByCity(String city);
 }

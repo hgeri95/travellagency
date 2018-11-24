@@ -1,6 +1,5 @@
 package bme.swarch.travellagency.hotelservice.service;
 
-import bme.swarch.travellagency.hotelservice.api.ReservationDTO;
 import bme.swarch.travellagency.hotelservice.api.RoomDTO;
 import bme.swarch.travellagency.hotelservice.api.RoomSearchRequest;
 import bme.swarch.travellagency.hotelservice.exception.ResourceNotFoundException;
@@ -28,19 +27,16 @@ public class HotelService {
 
     @PostConstruct
     public void init() {
-        String hun = "Hungary";
-        String spn = "Spain";
-        String frn = "French";
         String bud = "Budapest";
         String bcn = "Barcelona";
         String prs = "Paris";
-        createRoom(hun, bud, 2);
-        createRoom(hun, bud, 2);
-        createRoom(hun, bud, 4);
-        createRoom(spn, bcn, 1);
-        createRoom(spn, bcn, 3);
-        createRoom(frn, prs, 2);
-        createRoom(frn, prs, 6);
+        createRoom(bud, 2);
+        createRoom(bud, 2);
+        createRoom(bud, 4);
+        createRoom(bcn, 1);
+        createRoom(bcn, 3);
+        createRoom(prs, 2);
+        createRoom(prs, 6);
     }
 
     public List<RoomDTO> getAllRooms() {
@@ -54,22 +50,22 @@ public class HotelService {
         return convertToDTO(room);
     }
 
-    public List<RoomDTO> getAllRoomFromPlace(String country, String city) {
-        List<Room> rooms = roomRepository.findAllByCountryAndCity(country, city);
+    public List<RoomDTO> getAllRoomFromPlace(String city) {
+        List<Room> rooms = roomRepository.findAllByCity(city);
         return rooms.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     public List<RoomDTO> getFreeRooms(RoomSearchRequest roomSearchRequest) {
         List<Room> rooms = roomRepository
-                .findAllByCountryAndCity(roomSearchRequest.getCountry(), roomSearchRequest.getCity());
+                .findAllByCity(roomSearchRequest.getCity());
         List<Room> freeRooms = rooms.stream()
                 .filter(r -> reservationService.isRoomFree(r.getId(), roomSearchRequest.getStart(), roomSearchRequest.getEnd()))
                 .collect(Collectors.toList());
         return freeRooms.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    private void createRoom(String country, String city, int size) {
-        roomRepository.save(new Room(country, city, size));
+    private void createRoom(String city, int size) {
+        roomRepository.save(new Room(city, size));
     }
 
     private RoomDTO convertToDTO(Room room) {

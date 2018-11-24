@@ -13,6 +13,15 @@ public class TicketSearchRequest implements Serializable {
     @NotNull
     private Date start;
 
+    public TicketSearchRequest() {
+    }
+
+    public TicketSearchRequest(@NotBlank String from, @NotBlank String to, @NotNull Date start) {
+        this.from = from;
+        this.to = to;
+        this.start = start;
+    }
+
     public String getFrom() {
         return from;
     }
