@@ -23,7 +23,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.0.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent fromCity repository -->
 	</parent>
 
 	<properties>
@@ -42,6 +42,11 @@
 			<dependency>
 				<groupId>bme.swarch</groupId>
 				<artifactId>hotel-api</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>bme.swarch</groupId>
+				<artifactId>plane-api</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
