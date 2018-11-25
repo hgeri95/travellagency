@@ -6,6 +6,7 @@ import bme.swarch.travellagency.carservice.api.ReservationDTO;
 import bme.swarch.travellagency.carservice.exception.BadRequestException;
 import bme.swarch.travellagency.carservice.service.CarService;
 import bme.swarch.travellagency.carservice.service.ReservationService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,27 +26,32 @@ public class CarController {
     private ReservationService reservationService;
 
     @GetMapping("/car/all")
+    @ApiOperation("Get all cars from the system")
     public List<CarDTO> getAllCars() {
         return carService.getAllCars();
     }
 
     @PostMapping("/car")
+    @ApiOperation("Create new car")
     public CarDTO createCar(@Valid @RequestBody CarDTO carDto) {
         return carService.createCar(carDto);
     }
 
     @GetMapping("/car/{id}")
+    @ApiOperation("Get car by car id")
     public CarDTO getCar(@PathVariable(value = "id") Long id) {
         return carService.getCarById(id);
     }
 
     @DeleteMapping("/car/{id}")
+    @ApiOperation("Delete car by car id")
     public ResponseEntity<?> deleteCar(@PathVariable("id") Long id) {
         carService.deleteCar(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/car/place/{city}")
+    @ApiOperation("Get all cars from a specified place")
     public List<CarDTO> getAllCarFromPlace(@PathVariable("city") String city) {
         if (city != null) {
             return carService.getAllCarFromPlace(city);
@@ -55,6 +61,7 @@ public class CarController {
     }
 
     @PostMapping("/car/reservation")
+    @ApiOperation("Reserve a car")
     public ReservationDTO createReservation(@Valid @RequestBody ReservationDTO reservationDTO) {
         if (reservationDTO.getEnd().before(reservationDTO.getStart())) {
             throw new BadRequestException("End date before start!");
@@ -64,11 +71,13 @@ public class CarController {
     }
 
     @GetMapping("/car/reservation/one/{id}")
+    @ApiOperation("Get reservation by reservation id")
     public ReservationDTO getReservationById(@PathVariable("id") Long id) {
         return reservationService.getReservationById(id);
     }
 
     @GetMapping("/car/reservation/{id}")
+    @ApiOperation("Get all reservations by car id")
     public List<ReservationDTO> getAllReservationForCar(@PathVariable("id") Long id) {
         if (id != null) {
             return reservationService.getAllReservationForCar(id);
@@ -78,6 +87,7 @@ public class CarController {
     }
 
     @PostMapping("/car/free")
+    @ApiOperation("Get free cars")
     public List<CarDTO> getFreeCars(@Valid @RequestBody CarSearchRequest request) {
         return carService.getFreeCars(request);
     }

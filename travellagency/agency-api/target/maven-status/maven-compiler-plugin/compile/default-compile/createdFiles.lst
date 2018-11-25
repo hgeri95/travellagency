@@ -1,0 +1,8 @@
+bme\swarch\travellagency\agencyservice\api\ReservationRequestDTO.class
+bme\swarch\travellagency\agencyservice\api\UserDTO.class
+bme\swarch\travellagency\agencyservice\api\JourneyDTO.class
+bme\swarch\travellagency\agencyservice\api\DetailedJourneyDTO.class
+bme\swarch\travellagency\agencyservice\api\JourneySearchRequest.class
+bme\swarch\travellagency\agencyservice\api\ReservationResponseDTO.class
+bme\swarch\travellagency\agencyservice\api\DetailedReservationDTO.class
+bme\swarch\travellagency\agencyservice\api\LoginRequest.class

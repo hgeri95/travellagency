@@ -122,7 +122,7 @@ public class ReservationService {
         DetailedReservationDTO detailedReservationDTO = new DetailedReservationDTO();
 
         ReservationDTO carReservation = null;
-        if (request.getCarId() != null) {
+        if (request.getCarId() != null && !request.getCarId().equals("")) {
             ReservationDTO carReservationRequest = new ReservationDTO(request.getCarId(), journeyDTO.getStart(), journeyDTO.getEnd());
             try {
                 carReservation = restTemplate
@@ -135,7 +135,7 @@ public class ReservationService {
         }
 
         bme.swarch.travellagency.hotelservice.api.ReservationDTO roomReservation = null;
-        if (request.getRoomId() != null) {
+        if (request.getRoomId() != null && !request.getRoomId().equals("")) {
             bme.swarch.travellagency.hotelservice.api.ReservationDTO roomReservationRequest =
                     new bme.swarch.travellagency.hotelservice.api.ReservationDTO(request.getRoomId(), journeyDTO.getStart(), journeyDTO.getEnd());
             try {
